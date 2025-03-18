@@ -6,7 +6,13 @@ import { contactsModel } from "../models/Contact.js";
  * @access Private
  */
 export const createFn = async (req, res) => {
+
     const { name, email, phone, type } = req.body;
+
+    // Check if phone is valid
+    if (!/^[0-9]{10}$/.test(phone)) {
+        return res.status(400).json({ error: "Invalid phone number format!" });
+      }
 
     // Check if the contact already exists for this user
     const assert = await contactsModel.findOne({ phone: phone, userId: req.authUser._id });
@@ -18,18 +24,19 @@ export const createFn = async (req, res) => {
     }
     try {
         // Create a new contact
-        await contactsModel.create({
+       const contact =  await contactsModel.create({
             name, email, phone, type, userId: req.authUser._id
         });
 
         return res.status(201).json({
             success: true,
-            message: "Contact created successfully!"
+            message: "Contact created successfully!",
+            contact
         });
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };
@@ -50,7 +57,7 @@ export const getFn = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };
@@ -78,7 +85,7 @@ export const deleteFn = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };
@@ -112,7 +119,7 @@ export const updateFn = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };

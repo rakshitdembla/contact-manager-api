@@ -41,7 +41,7 @@ export const registerFn = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };
@@ -85,7 +85,7 @@ export const loginFn = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error!"
+            message: "Invalid or expired token!"
         });
     }
 };

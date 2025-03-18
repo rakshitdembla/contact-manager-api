@@ -4,10 +4,11 @@ import dotenv from "dotenv";
 import { userRouter } from "./routes/user_routes.js";
 import { contactsRouter } from "./routes/contact_routes.js";
 
+dotenv.config(); 
 const _server = express();
 const _port = process.env.PORT;
 
-dotenv.config(); 
+
 
 /**
  * @api Server Listener
