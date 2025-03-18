@@ -22,7 +22,7 @@ export const isAuthenticated = async (req, res, next) => {
         const authToken = authHeader.split(" ")[1];
         
         // Verify JWT token
-        const verifyToken = jwt.verify(authToken, "rakshitdembla@@");
+        const verifyToken = jwt.verify(authToken, "JWT_SECRET_KEY");
         const userId = verifyToken.userId;
         
         // Find user by decoded token ID
